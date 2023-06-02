@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "934788130436",
+    "project_id": "imiu-6b077",
+    "storage_bucket": "imiu-6b077.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934788130436:android:2f853b6ccc98132a3dc4d1",
+        "android_client_info": {
+          "package_name": "com.example.imiu_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934788130436-gboe7j5ejojst8rkb4spmsokgl8fdusc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRaGIbH1M025R_p1LaRRRT0A3wwTQe8is"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934788130436-g0dmjhri8b3ccf97n6ri112evlu5h8l6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "934788130436-maf5iu2penosbcb4ft3m199unf8qvro4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.imiuMobile.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
