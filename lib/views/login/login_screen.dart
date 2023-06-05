@@ -1,11 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:imiu_mobile/controllers/auth_controller.dart';
-import 'package:imiu_mobile/views/screens/auth/register_screen.dart';
+import 'package:imiu_mobile/controllers/login_controller.dart';
+import 'package:imiu_mobile/views/login/register_screen.dart';
 import 'package:imiu_mobile/widgets/custom_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../../../ultis/colors.dart';
+import '../../ultis/colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -16,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
-  late final AuthController authController = AuthController(formKey);
+  late final LoginController authController = LoginController(formKey);
 
   @override
   void dispose() {
@@ -28,23 +27,9 @@ class _LoginScreenState extends State<LoginScreen> {
   signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    print(googleUser?.email);
-
-    // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
-    print(googleAuth?.accessToken);
-    print(googleAuth?.idToken);
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    // final user = await FirebaseAuth.instance.signInWithCredential(credential);
-    // String token = await user.user!.getIdToken();
-    authController.loginWithGoogle(googleAuth?.accessToken, googleUser?.email);
+    authController.loginWithGoogle(googleAuth?.accessToken);
   }
 
   @override

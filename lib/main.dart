@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:imiu_mobile/views/screens/auth/auth_page.dart';
+import 'package:imiu_mobile/routes/app_pages.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import "./ultis/colors.dart";
@@ -42,7 +42,9 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Imiu',
+      initialRoute: AppPages.initial,
+      getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: primaryBg,
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
       ),
       builder: FToastBuilder(),
-      home: const AuthPage(),
+      // home: const AuthPage(),
     );
   }
 }

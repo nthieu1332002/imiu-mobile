@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:imiu_mobile/views/screens/auth/login_screen.dart';
+import 'package:imiu_mobile/views/login/login_screen.dart';
 import 'package:imiu_mobile/widgets/custom_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../ultis/colors.dart';
+import '../../ultis/colors.dart';
 
 class RegisterScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

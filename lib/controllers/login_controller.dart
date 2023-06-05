@@ -3,17 +3,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imiu_mobile/apis/auth_api.dart';
+import 'package:imiu_mobile/routes/app_pages.dart';
 import 'package:imiu_mobile/widgets/custom_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthController extends GetxController {
+class LoginController extends GetxController {
   final AuthApi authApi = AuthApi();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final GlobalKey<FormState> formKey;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  AuthController(this.formKey);
-
+  LoginController(this.formKey);
   Future<void> login() async {
     if (formKey.currentState!.validate()) {
       final data = {
@@ -30,15 +30,18 @@ class AuthController extends GetxController {
 
             final SharedPreferences prefs = await _prefs;
             await Future.wait([
-              prefs.setString('accessToken', res['data']['accessToken']),
               prefs.setBool('isVerified', res['data']['isVerify']),
               prefs.setString('role', res['data']['role']),
-              prefs.setString('subscription', res['data']['subcription'] ?? ''),
+              prefs.setString('accessToken', res['data']['accessToken']),
+              prefs.setString('accountId', res['data']['accountId']),
+              prefs.setString(
+                  'name', res['data']['name'] ?? res['data']['email']),
+              prefs.setString(
+                  'subscription', res['data']['subcription']?.toString() ?? ''),
             ]);
 
-            emailController.clear();
-            passwordController.clear();
-            // -> home
+            TextEditingController().clear();
+            Get.offAllNamed(Routes.splash);
           } else {
             throw jsonDecode(response.body)['message'];
           }
@@ -51,11 +54,10 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> loginWithGoogle(token, email) async {
+  Future<void> loginWithGoogle(token) async {
     try {
-      print("ngu");
       print(token);
-      final data = {'accessToken': token, 'email': email};
+      final data = {'accessToken': token};
       final response = await authApi.loginWithGoogle(data);
       if (response.statusCode == 200) {
         final res = jsonDecode(response.body);
