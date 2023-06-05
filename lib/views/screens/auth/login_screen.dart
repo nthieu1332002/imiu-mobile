@@ -1,34 +1,50 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:imiu_mobile/controllers/auth_controller.dart';
 import 'package:imiu_mobile/views/screens/auth/register_screen.dart';
 import 'package:imiu_mobile/widgets/custom_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../ultis/colors.dart';
 
-class LoginScreen extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
-  LoginScreen({super.key});
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
 
-  void signUserIn() async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
-      } on FirebaseAuthException catch (e) {
-        Fluttertoast.showToast(
-            msg: "Đăng nhập thất bại. Vui lòng kiểm tra lại tài khoản.",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: primaryBg,
-            textColor: errorColor,
-            fontSize: 16.0);
-      }
-    }
+class _LoginScreenState extends State<LoginScreen> {
+  final formKey = GlobalKey<FormState>();
+  late final AuthController authController = AuthController(formKey);
+
+  @override
+  void dispose() {
+    authController.emailController.dispose();
+    authController.passwordController.dispose();
+    super.dispose();
+  }
+
+  signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    print(googleUser?.email);
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+    print(googleAuth?.accessToken);
+    print(googleAuth?.idToken);
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    // final user = await FirebaseAuth.instance.signInWithCredential(credential);
+    // String token = await user.user!.getIdToken();
+    authController.loginWithGoogle(googleAuth?.accessToken, googleUser?.email);
   }
 
   @override
@@ -38,7 +54,7 @@ class LoginScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(15),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -55,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                   height: 50,
                 ),
                 TextFormField(
-                  controller: emailController,
+                  controller: authController.emailController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Vui lòng nhập email.';
@@ -75,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                   height: 10,
                 ),
                 TextFormField(
-                  controller: passwordController,
+                  controller: authController.passwordController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Vui lòng nhập mật khẩu.';
@@ -100,11 +116,7 @@ class LoginScreen extends StatelessWidget {
                   child: CustomButton(
                     text: 'Đăng nhập',
                     onPressed: () {
-                      // if (_formKey.currentState!.validate()) {
-                      //   return;
-                      // } else {
-                      signUserIn();
-                      // }
+                      authController.login();
                     },
                   ),
                 ),
@@ -123,7 +135,9 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      signInWithGoogle();
+                    },
                     icon: const Icon(FontAwesomeIcons.google,
                         color: Colors.black),
                     label: const Text('Đăng nhập với Google',
