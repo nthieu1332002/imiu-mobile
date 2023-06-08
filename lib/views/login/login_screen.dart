@@ -29,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
+    print("call api login");
     authController.loginWithGoogle(googleAuth?.accessToken);
   }
 

@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:imiu_mobile/views/choosePlan/subscription_binding.dart';
+import 'package:imiu_mobile/views/choosePlan/subscription_screen.dart';
 import 'package:imiu_mobile/views/login/login_binding.dart';
 import 'package:imiu_mobile/views/login/login_screen.dart';
 import 'package:imiu_mobile/views/login/register_screen.dart';
@@ -30,6 +32,11 @@ class AppPages {
     GetPage(
       name: _Paths.home,
       page: () => HomeScreen(),
+    ),
+    GetPage(
+      name: _Paths.subscription,
+      page: () => SubscriptionScreen(),
+      binding: SubscriptionBinding(),
     )
   ];
 }

@@ -19,19 +19,15 @@ class SplashController extends GetxController {
     print(accessToken);
     print(isVerified);
     if (accessToken != null && accessToken.isNotEmpty && isVerified != null) {
-      if (isVerified != null) {
-        print('1');
+      if (isVerified) {
         Future.delayed(
             const Duration(seconds: 3), () => Get.offAllNamed(Routes.home));
       } else {
-        print('2');
         //return verify page
         Future.delayed(
             const Duration(seconds: 3), () => Get.offAllNamed(Routes.login));
       }
     } else {
-      print('3');
-
       Future.delayed(
           const Duration(seconds: 3), () => Get.offAllNamed(Routes.login));
     }
