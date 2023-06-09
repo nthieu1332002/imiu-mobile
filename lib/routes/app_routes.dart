@@ -7,6 +7,7 @@ abstract class Routes {
   static const login = _Paths.login;
   static const home = _Paths.home;
   static const subscription = _Paths.subscription;
+  static const payment = _Paths.payment;
 }
 
 abstract class _Paths {
@@ -16,4 +17,5 @@ abstract class _Paths {
   static const login = '/login';
   static const home = '/home';
   static const subscription = '/subscription';
+  static const payment = '/payment';
 }

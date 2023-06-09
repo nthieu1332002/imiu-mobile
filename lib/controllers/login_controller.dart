@@ -40,8 +40,7 @@ class LoginController extends GetxController {
               prefs.setString('role', res['data']['role']),
               prefs.setString('accessToken', res['data']['accessToken']),
               prefs.setString('accountId', res['data']['accountId']),
-              prefs.setString(
-                  'name', res['data']['name'] ?? res['data']['email']),
+              prefs.setString('email', res['data']['email']),
               prefs.setString(
                   'subscription', res['data']['subcription']?.toString() ?? ''),
             ]);

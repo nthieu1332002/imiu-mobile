@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:imiu_mobile/views/login/login_screen.dart';
 import 'package:imiu_mobile/widgets/custom_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../ultis/colors.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -166,8 +165,8 @@ class RegisterScreen extends StatelessWidget {
                         const SizedBox(
                           height: 5,
                         ),
-                        SvgPicture.asset(
-                          'assets/images/imiu-login.svg',
+                        Image.asset(
+                          'assets/images/imiu-login.png',
                           width: MediaQuery.of(context).size.width,
                         ),
                       ],

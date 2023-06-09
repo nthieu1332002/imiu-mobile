@@ -5,6 +5,8 @@ import 'package:imiu_mobile/views/login/login_binding.dart';
 import 'package:imiu_mobile/views/login/login_screen.dart';
 import 'package:imiu_mobile/views/login/register_screen.dart';
 import 'package:imiu_mobile/views/home/home_screen.dart';
+import 'package:imiu_mobile/views/payment/payment_binding.dart';
+import 'package:imiu_mobile/views/payment/payment_screen.dart';
 import 'package:imiu_mobile/views/splash/splash_binding.dart';
 import 'package:imiu_mobile/views/splash/splash_screen.dart';
 
@@ -37,6 +39,11 @@ class AppPages {
       name: _Paths.subscription,
       page: () => SubscriptionScreen(),
       binding: SubscriptionBinding(),
+    ),
+    GetPage(
+      name: _Paths.payment,
+      page: () => PaymentScreen(),
+      binding: PaymentBinding(),
     )
   ];
 }
