@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -45,6 +43,12 @@ class AuthApi {
   Future<http.Response> email(Map<String, dynamic> data) async {
     final response =
         await _sendRequest(url: "/email", method: 'POST', body: data);
+    return response;
+  }
+
+  Future<http.Response> register(Map<String, dynamic> data) async {
+    final response =
+        await _sendRequest(url: "/register", method: 'POST', body: data);
     return response;
   }
 }

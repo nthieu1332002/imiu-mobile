@@ -26,13 +26,15 @@ class CustomToast {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(icon, color: Colors.white),
-            SizedBox(width: 12.0),
-            Text(message, style: TextStyle(color: Colors.white)),
+            const SizedBox(width: 12.0),
+            Flexible(
+                child:
+                    Text(message, style: const TextStyle(color: Colors.white))),
           ],
         ),
       ),
-      gravity: ToastGravity.BOTTOM,
-      toastDuration: Duration(seconds: 3),
+      gravity: ToastGravity.CENTER,
+      toastDuration: const Duration(seconds: 3),
     );
   }
 }

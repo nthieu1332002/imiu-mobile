@@ -75,7 +75,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             )),
             child: SafeArea(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Obx(() {
                   if (paymentController.isLoading.value) {
                     return Text("Loading");
@@ -88,27 +88,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(15)),
                             child: Padding(
-                                padding: EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(15),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Thông tin cá nhân",
+                                    const Text("Thông tin cá nhân",
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold)),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Text(
+                                        const Text(
                                           "Info: ",
                                           style: TextStyle(fontSize: 15),
                                         ),
                                         Text(paymentController.info.value,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 18)),
                                       ],
@@ -117,11 +117,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Text("Code: "),
+                                        const Text("Code: "),
                                         Text(
-                                            paymentController.payment
-                                                .value['transactionCode'],
-                                            style: TextStyle(
+                                            paymentController
+                                                .payment['transactionCode'],
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 18)),
                                       ],
@@ -134,7 +134,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: Image.network(
-                              paymentController.payment.value['qrCode']),
+                              paymentController.payment['qrCode']),
                         ),
                         const SizedBox(
                           height: 10,
@@ -142,8 +142,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         Text.rich(
                           TextSpan(
                               text: "Tự động cập nhật sau $_timerCount",
-                              style: TextStyle(color: Colors.white),
-                              children: [TextSpan(text: "s")]),
+                              style: const TextStyle(color: Colors.white),
+                              children: const [TextSpan(text: "s")]),
                         ),
                         const SizedBox(
                           height: 10,
@@ -152,15 +152,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           width: 200,
                           height: 45,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              paymentController.plans();
+                            },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Tiếp tục",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,

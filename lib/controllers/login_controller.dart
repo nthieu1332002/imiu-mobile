@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,13 +11,31 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   final AuthApi authApi = AuthApi();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final GlobalKey<FormState> formKey;
+  late TextEditingController emailController, passwordController;
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+
+  @override
+  void onInit() {
+    super.onInit();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    print("loginFormKey: $loginFormKey");
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  LoginController(this.formKey);
   Future<void> login() async {
-    if (formKey.currentState!.validate()) {
+    if (loginFormKey.currentState!.validate()) {
       final data = {
         'email': emailController.text,
         'password': passwordController.text,
@@ -26,7 +45,6 @@ class LoginController extends GetxController {
         FullLoading.showDialog();
 
         final response = await authApi.login(data);
-        FullLoading.cancelDialog();
 
         if (response.statusCode == 200) {
           final res = jsonDecode(response.body);
@@ -44,9 +62,11 @@ class LoginController extends GetxController {
               prefs.setString(
                   'subscription', res['data']['subcription']?.toString() ?? ''),
             ]);
-
             TextEditingController().clear();
-            Get.offAllNamed(Routes.home);
+            if (res['data']['subsription'] ?? false) {
+              Get.offAllNamed(Routes.home);
+            }
+            Get.offAllNamed(Routes.subscription);
           } else {
             throw jsonDecode(response.body)['message'];
           }
@@ -59,16 +79,17 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> loginWithGoogle(token) async {
+  Future<void> loginWithGoogle() async {
     try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
       FullLoading.showDialog();
-      final data = {'accessToken': token};
+      final data = {'accessToken': googleAuth?.accessToken};
       final response = await authApi.loginWithGoogle(data);
       FullLoading.cancelDialog();
-      print(response);
       if (response.statusCode == 200) {
         final res = jsonDecode(response.body);
-        print(res);
         if (res['data']['isVerify'] == true) {
           CustomToast.showSuccess(
               Get.overlayContext!, res['message'].toString());
@@ -78,20 +99,14 @@ class LoginController extends GetxController {
             prefs.setString('role', res['data']['role']),
             prefs.setString('accessToken', res['data']['accessToken']),
             prefs.setString('accountId', res['data']['accountId']),
+            prefs.setString('email', res['data']['email']),
             prefs.setString(
-                'name', res['data']['name'] ?? res['data']['email']),
-            // prefs.setString('subscription',
-            //     res['data']['subcription']['name']?.toString() ?? ''),
+                'subscription', res['data']['subcription']?.toString() ?? ''),
           ]);
-          // -> checking here
-          // Get.offAllNamed(Routes.home);
-          // String subscription =
-          //     res['data']['subscription']['name']?.toString() ?? '';
+          if (res['data']['subsription'] ?? false) {
+            Get.offAllNamed(Routes.home);
+          }
           Get.offAllNamed(Routes.subscription);
-          // if (subscription == "") {
-          // } else {
-          //   Get.offAllNamed(Routes.home);
-          // }
         } else {
           throw jsonDecode(response.body)['message'];
         }

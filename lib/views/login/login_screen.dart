@@ -1,37 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:imiu_mobile/controllers/login_controller.dart';
-import 'package:imiu_mobile/views/login/register_screen.dart';
+import 'package:imiu_mobile/routes/app_pages.dart';
 import 'package:imiu_mobile/widgets/custom_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import '../../ultis/colors.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
-  late final LoginController authController = LoginController(formKey);
-
-  @override
-  void dispose() {
-    authController.emailController.dispose();
-    authController.passwordController.dispose();
-    super.dispose();
-  }
-
-  signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-    print("call api login");
-    authController.loginWithGoogle(googleAuth?.accessToken);
-  }
+class LoginScreen extends GetView<LoginController> {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Form(
-              key: formKey,
+              key: controller.loginFormKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -58,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 50,
                   ),
                   TextFormField(
-                    controller: authController.emailController,
+                    controller: controller.emailController,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Vui lòng nhập email.';
@@ -78,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 10,
                   ),
                   TextFormField(
-                    controller: authController.passwordController,
+                    controller: controller.passwordController,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Vui lòng nhập mật khẩu.';
@@ -103,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: CustomButton(
                       text: 'Đăng nhập',
                       onPressed: () {
-                        authController.login();
+                        controller.login();
                       },
                     ),
                   ),
@@ -123,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        signInWithGoogle();
+                        controller.loginWithGoogle();
                       },
                       icon: const Icon(FontAwesomeIcons.google,
                           color: Colors.black),
@@ -156,10 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return RegisterScreen();
-                        }));
+                        Get.offAllNamed(Routes.register);
                       },
                       child: const Text(
                         'Đăng ký ngay',

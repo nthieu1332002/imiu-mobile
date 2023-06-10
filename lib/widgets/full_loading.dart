@@ -6,10 +6,13 @@ class FullLoading {
   static void showDialog() {
     Get.dialog(
       WillPopScope(
-          child: const Center(child: CircularProgressIndicator()),
+          child: const Center(
+              child: CircularProgressIndicator(
+            color: primaryColor,
+          )),
           onWillPop: () => Future.value(false)),
       barrierDismissible: false,
-      barrierColor: primaryColor,
+      barrierColor: primaryColor.withOpacity(0.5),
       useSafeArea: true,
     );
   }

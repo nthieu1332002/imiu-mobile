@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imiu_mobile/controllers/subscription_controller.dart';
 import 'package:imiu_mobile/models/subscription.dart';
+import 'package:imiu_mobile/routes/app_pages.dart';
 import 'package:imiu_mobile/ultis/colors.dart';
 import 'package:imiu_mobile/views/payment/payment_screen.dart';
 import 'package:imiu_mobile/widgets/custom_button.dart';
@@ -180,9 +181,7 @@ class SubscriptionScreen extends StatelessWidget {
               child: CustomButton(
                 text: 'Bắt đầu',
                 onPressed: () {
-                  Get.to(() => PaymentScreen(), arguments: subscription.id);
-                  // Navigator.pushNamed(context, '/payment',
-                  //     arguments: {'subId': subscription.id});
+                  Get.toNamed(Routes.payment, arguments: subscription.id);
                 },
               ),
             ),

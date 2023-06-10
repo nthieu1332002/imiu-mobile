@@ -3,7 +3,8 @@ import 'package:imiu_mobile/views/choosePlan/subscription_binding.dart';
 import 'package:imiu_mobile/views/choosePlan/subscription_screen.dart';
 import 'package:imiu_mobile/views/login/login_binding.dart';
 import 'package:imiu_mobile/views/login/login_screen.dart';
-import 'package:imiu_mobile/views/login/register_screen.dart';
+import 'package:imiu_mobile/views/register/register_binding.dart';
+import 'package:imiu_mobile/views/register/register_screen.dart';
 import 'package:imiu_mobile/views/home/home_screen.dart';
 import 'package:imiu_mobile/views/payment/payment_binding.dart';
 import 'package:imiu_mobile/views/payment/payment_screen.dart';
@@ -29,7 +30,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.register,
-      page: () => RegisterScreen(),
+      page: () => const RegisterScreen(),
+      binding: RegisterBinding(),
     ),
     GetPage(
       name: _Paths.home,

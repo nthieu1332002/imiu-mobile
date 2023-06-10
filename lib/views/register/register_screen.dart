@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:imiu_mobile/views/login/login_screen.dart';
+import 'package:get/get.dart';
+import 'package:imiu_mobile/controllers/register_controller.dart';
+import 'package:imiu_mobile/routes/app_pages.dart';
 import 'package:imiu_mobile/widgets/custom_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../ultis/colors.dart';
 
-class RegisterScreen extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class RegisterScreen extends GetView<RegisterController> {
+  const RegisterScreen({super.key});
 
-  RegisterScreen({super.key});
-
-  void signUserIn() {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +20,7 @@ class RegisterScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Form(
-                    key: _formKey,
+                    key: controller.registerFormKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -49,12 +48,9 @@ class RegisterScreen extends StatelessWidget {
                           height: 20,
                         ),
                         TextFormField(
+                          controller: controller.emailController,
                           validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Vui lòng nhập email.';
-                            } else {
-                              return null;
-                            }
+                            return controller.validateEmail(value!);
                           },
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
@@ -68,12 +64,9 @@ class RegisterScreen extends StatelessWidget {
                           height: 10,
                         ),
                         TextFormField(
+                          controller: controller.passwordController,
                           validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Vui lòng nhập mật khẩu.';
-                            } else {
-                              return null;
-                            }
+                            return controller.validatePassword(value!);
                           },
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
@@ -92,7 +85,7 @@ class RegisterScreen extends StatelessWidget {
                           child: CustomButton(
                             text: 'Đăng ký',
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {}
+                              controller.register();
                             },
                           ),
                         ),
@@ -112,7 +105,7 @@ class RegisterScreen extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              signUserIn();
+                              controller.loginWithGoogle();
                             },
                             icon: const Icon(FontAwesomeIcons.google,
                                 color: Colors.black),
@@ -147,10 +140,7 @@ class RegisterScreen extends StatelessWidget {
                               const SizedBox(width: 4),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return LoginScreen();
-                                  }));
+                                  Get.offAllNamed(Routes.login);
                                 },
                                 child: const Text(
                                   'Đăng nhập ngay',
