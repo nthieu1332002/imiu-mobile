@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:imiu_mobile/controllers/login_controller.dart';
 import 'package:imiu_mobile/routes/app_pages.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -31,6 +32,7 @@ void main() async {
   );
 
   HttpOverrides.global = MyHttpOverrides();
+  Get.put(LoginController(), tag: "loginControllerTag");
   runApp(const MyApp());
 }
 

@@ -74,6 +74,8 @@ flutter:
     - assets/images/favicon-imiu.png
     - assets/images/logo-imiu.png
     - assets/images/imiu-login.png
+    - assets/images/imiu-get-started-2.png
+    - assets/images/imiu-get-started-3.png
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see

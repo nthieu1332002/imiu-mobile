@@ -5,7 +5,6 @@ import 'package:imiu_mobile/controllers/subscription_controller.dart';
 import 'package:imiu_mobile/models/subscription.dart';
 import 'package:imiu_mobile/routes/app_pages.dart';
 import 'package:imiu_mobile/ultis/colors.dart';
-import 'package:imiu_mobile/views/payment/payment_screen.dart';
 import 'package:imiu_mobile/widgets/custom_button.dart';
 import 'package:intl/intl.dart';
 

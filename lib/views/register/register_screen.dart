@@ -18,7 +18,7 @@ class RegisterScreen extends GetView<RegisterController> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Form(
                     key: controller.registerFormKey,
                     child: Column(
