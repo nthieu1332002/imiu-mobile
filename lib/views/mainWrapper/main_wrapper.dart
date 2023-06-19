@@ -7,6 +7,7 @@ class MainWrapper extends GetView<MainWrapperController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: mainBg,
         bottomNavigationBar: navBar(context),
         body: PageView(
           controller: controller.pageController,
@@ -16,92 +17,77 @@ class MainWrapper extends GetView<MainWrapperController> {
         ));
   }
 
-  Container navBar(BuildContext context) {
+  Widget navBar(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
+        color: primaryBg,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
       ),
+      padding: const EdgeInsets.all(10),
       child: Container(
-          height: 60,
-          decoration: BoxDecoration(
-              color: navBg, borderRadius: BorderRadius.circular(25)),
-          child: Obx(
-            () => Row(
+        height: 70,
+        child: Obx(() {
+          final int currentPage = controller.currentPage.value;
+
+          return Container(
+            padding: const EdgeInsets.all(10),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Material(
-                  child: IconButton(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onPressed: () {
-                        controller.goToPage(0);
-                      },
-                      icon: controller.currentPage == 0
-                          ? const Icon(
-                              Icons.home_rounded,
-                              color: primaryColor,
-                              size: 27,
-                            )
-                          : const Icon(
-                              Icons.home_rounded,
-                              color: greyColor,
-                              size: 25,
-                            )),
+                _buildNavBarItem(
+                  Icons.home_rounded,
+                  'Home',
+                  0,
+                  currentPage,
                 ),
-                IconButton(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: () {
-                    controller.goToPage(1);
-                  },
-                  icon: controller.currentPage == 1
-                      ? const Icon(
-                          Icons.restaurant_menu,
-                          color: primaryColor,
-                          size: 27,
-                        )
-                      : const Icon(
-                          Icons.restaurant_menu,
-                          color: greyColor,
-                          size: 25,
-                        ),
+                _buildNavBarItem(
+                  Icons.restaurant_menu,
+                  'Menu',
+                  1,
+                  currentPage,
                 ),
-                IconButton(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onPressed: () {
-                      controller.goToPage(2);
-                    },
-                    icon: controller.currentPage == 2
-                        ? const Icon(
-                            Icons.bookmarks,
-                            color: primaryColor,
-                            size: 27,
-                          )
-                        : const Icon(
-                            Icons.bookmarks,
-                            color: greyColor,
-                            size: 25,
-                          )),
-                // IconButton(
-                // splashColor: Colors.transparent,
-                //   highlightColor: Colors.transparent,
-                //     enableFeedback: false,
-                //     onPressed: () {
-                //       controller.goToPage(3);
-                //     },
-                //     icon: const Icon(
-                //       Icons.person,
-                //       color: primaryColor,
-                //       size: 25,
-                //     )),
+                _buildNavBarItem(
+                  Icons.bookmarks,
+                  'Bookmarks',
+                  2,
+                  currentPage,
+                ),
               ],
             ),
-          )),
+          );
+        }),
+      ),
+    );
+  }
+
+  GestureDetector _buildNavBarItem(
+    IconData icon,
+    String label,
+    int index,
+    int currentPage,
+  ) {
+    return GestureDetector(
+      onTap: () => controller.goToPage(index),
+      child: Column(
+        children: [
+          Icon(
+            icon,
+            size: 26,
+            color: currentPage == index ? primaryColor : greyColor,
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: currentPage == index ? primaryColor : greyColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

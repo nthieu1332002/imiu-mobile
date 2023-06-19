@@ -1,22 +1,22 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:imiu_mobile/models/subscription.dart';
+import 'package:imiu_mobile/models/meal.dart';
 
-class SubscriptionApi {
+class MealApi {
   static var client = http.Client();
 
-  static Future<List<Subscription>> getSubScriptions() async {
+  static Future<List<Meal>> getMealList() async {
     final baseUrl = dotenv.env['API_ENDPOINT'];
-    final uri = Uri.parse('$baseUrl/subscriptions');
-    final response = await client.get(uri);
+    final uri = Uri.parse('$baseUrl/meals?pageNumber=1&pageSize=4');
+    final response = await client.get(uri).timeout(const Duration(seconds: 10));
     if (response.statusCode == 200) {
       print(jsonDecode(response.body));
       var jsonString = response.body;
-      return subscriptionFromJson(jsonString);
+      return mealFromJson(jsonString);
     } else {
       //error
-      throw Exception('Failed to get subscriptions');
+      throw Exception('Failed to get meals');
     }
   }
 }
