@@ -6,7 +6,6 @@ import 'dart:convert';
 
 List<Meal> mealFromJson(String str) {
   final jsonData = json.decode(str)['data'].cast<Map<String, dynamic>>();
-  print("jsonData: +$jsonData");
   return jsonData.map<Meal>((json) => Meal.fromJson(json)).toList();
 }
 

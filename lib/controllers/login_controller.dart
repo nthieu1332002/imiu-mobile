@@ -19,7 +19,6 @@ class LoginController extends GetxController {
     super.onInit();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    print("loginFormKey: $loginFormKey");
   }
 
   @override

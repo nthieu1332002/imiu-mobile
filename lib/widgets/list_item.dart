@@ -22,7 +22,7 @@ class ListItem extends StatelessWidget {
     int maxLength = 20;
     String fName;
     if (name.length > maxLength) {
-      fName = name.substring(0, maxLength) + '...';
+      fName = '${name.substring(0, maxLength)}...';
     } else {
       fName = name;
     }
@@ -59,7 +59,7 @@ class ListItem extends StatelessWidget {
                 Icon(Icons.menu_book_outlined, size: 17, color: greyLightColor),
                 SizedBox(width: 3),
                 Text(
-                  '$duration',
+                  '$difficulty',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w100,

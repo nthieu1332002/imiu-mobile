@@ -54,6 +54,25 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.deepPurple,
           primary: const Color(0xFF0CBF1E),
         ),
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(
+              color: mainText,
+              fontFamily: 'Montserrat',
+              fontSize: 22,
+              fontWeight: FontWeight.bold),
+          displayMedium: TextStyle(
+            color: mainText,
+            fontFamily: 'Montserrat',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          displaySmall: TextStyle(
+            color: greyColor,
+            fontFamily: 'Montserrat',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         useMaterial3: false,
       ),
       builder: FToastBuilder(),

@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imiu_mobile/controllers/payment_controller.dart';
 import 'package:imiu_mobile/ultis/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentScreen extends StatefulWidget {
   PaymentScreen({Key? key}) : super(key: key);
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
-  // _PaymentScreenState createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {

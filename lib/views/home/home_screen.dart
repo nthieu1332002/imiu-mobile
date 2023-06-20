@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imiu_mobile/controllers/home_controller.dart';
+import 'package:imiu_mobile/routes/app_pages.dart';
 import 'package:imiu_mobile/ultis/colors.dart';
 import 'package:imiu_mobile/widgets/list_item.dart';
 
@@ -31,8 +32,7 @@ class HomeScreen extends GetView<HomeController> {
                           color: greyColor),
                     ),
                     Text(controller.email.value,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
+                        style: Theme.of(context).textTheme.displayLarge),
                     const SizedBox(
                       height: 10,
                     ),
@@ -104,16 +104,21 @@ class HomeScreen extends GetView<HomeController> {
                             fontWeight: FontWeight.bold, fontSize: 20)),
                     SizedBox(height: 10),
                     ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: controller.mealList.length,
                         itemBuilder: (BuildContext context, int index) {
                           final meal = controller.mealList[index];
-                          return ListItem(
-                            calories: meal.calories,
-                            difficulty: meal.difficulty,
-                            duration: meal.cookingTime,
-                            img: meal.imageUrl,
-                            name: meal.name,
+                          return GestureDetector(
+                            onTap: () => (Get.toNamed(Routes.mealDetail,
+                                arguments: meal.id)),
+                            child: ListItem(
+                              calories: meal.calories,
+                              difficulty: meal.difficulty,
+                              duration: meal.cookingTime,
+                              img: meal.imageUrl,
+                              name: meal.name,
+                            ),
                           );
                         }),
                   ],

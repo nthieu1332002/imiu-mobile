@@ -9,6 +9,8 @@ import 'package:imiu_mobile/views/mainWrapper/main_wrapper.dart';
 import 'package:imiu_mobile/views/mainWrapper/main_wrapper_binding.dart';
 import 'package:imiu_mobile/views/mark/mark_binding.dart';
 import 'package:imiu_mobile/views/mark/mark_screen.dart';
+import 'package:imiu_mobile/views/meal_detail/meal_detail_binding.dart';
+import 'package:imiu_mobile/views/meal_detail/meal_detail_screen.dart';
 import 'package:imiu_mobile/views/menu/menu_binding.dart';
 import 'package:imiu_mobile/views/menu/menu_screen.dart';
 import 'package:imiu_mobile/views/register/register_binding.dart';
@@ -62,11 +64,12 @@ class AppPages {
       page: () => PaymentScreen(),
       binding: PaymentBinding(),
     ),
-    // GetPage(
-    //   name: _Paths.menu,
-    //   page: () => MenuScreen(),
-    //   binding: MenuBinding(),
-    // ),
+    GetPage(
+      name: _Paths.mealDetail,
+      page: () => MealDetailScreen(),
+      binding: MealDetailBinding(),
+      transition: Transition.cupertino,
+    ),
     // GetPage(
     //   name: _Paths.mark,
     //   page: () => const MarkScreen(),
