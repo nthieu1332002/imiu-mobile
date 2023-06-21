@@ -106,7 +106,7 @@ scroll(MealDetail? item) {
       maxChildSize: 1.0,
       builder: (context, scrollController) {
         return Container(
-            // clipBehavior: Clip.hardEdge,
+            clipBehavior: Clip.hardEdge,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
                 color: mainBg,
@@ -180,6 +180,22 @@ scroll(MealDetail? item) {
                       height: 4,
                     ),
                   ),
+                  Text('Giá trị dinh dưỡng',
+                      style: Theme.of(context).textTheme.displayMedium),
+                  SizedBox(height: 10),
+                  ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: item.nutritionFacts.length,
+                      itemBuilder: (context, index) {
+                        return nutrition(item.nutritionFacts[index]);
+                      }),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Divider(
+                      height: 4,
+                    ),
+                  ),
                   Text('Nguyên liệu',
                       style: Theme.of(context).textTheme.displayMedium),
                   SizedBox(height: 10),
@@ -210,6 +226,25 @@ scroll(MealDetail? item) {
               ),
             ));
       });
+}
+
+nutrition(NutritionFact item) {
+  String name =
+      item.name[0].toUpperCase() + item.name.substring(1).toLowerCase();
+  return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(name, style: TextStyle(fontWeight: FontWeight.w500)),
+          Text.rich(
+            style: TextStyle(fontWeight: FontWeight.w500),
+            TextSpan(
+                text: item.value.toString() + " ",
+                children: [TextSpan(text: item.code)]),
+          ),
+        ],
+      ));
 }
 
 ingredients(MealIngredient item) {

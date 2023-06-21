@@ -1,18 +1,21 @@
-import 'dart:convert';
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imiu_mobile/apis/meal_api.dart';
 import 'package:imiu_mobile/models/meal_detail.dart';
 
-class MealDetailController extends GetxController {
+class MealDetailController extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  late TabController controller;
+
   late String mealId;
   final mealDetail = Rx<MealDetail?>(null);
   RxBool isLoading = false.obs;
   @override
   void onInit() {
+    super.onInit();
     mealId = Get.arguments;
     getMealDetail();
-    super.onInit();
+    controller = TabController(vsync: this, length: 2);
   }
 
   void getMealDetail() async {
